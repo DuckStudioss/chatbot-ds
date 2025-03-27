@@ -6,28 +6,36 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 
-app.post('/webhook', (req, res) => {
+const flowController = require('./flows/flowController');
+
+app.post('/webhook', async (req, res) => {
   const from = req.body.From || '';
   const msg = req.body.Body || '';
-  console.log(`📩 Mensaje recibido de ${from}: ${msg}`);
 
-  let respuesta = `¡Hola! 😊 Te habla Antonio, un gusto saludarte. Estoy procesando tu mensaje: "${msg}"`;
+  console.log(`📩 Message received from ${from}: ${msg}`);
 
-  // 🔍 Base para lógica condicional
-  if (msg.toLowerCase().includes("mercadeo")) {
-    console.log("💼 El usuario está interesado en el servicio de mercadeo.");
-    respuesta = `¡Hola! 😊 Te habla Antonio, un gusto saludarte. Vi que estás interesado en el servicio de mercadeo 360. ¿Te gustaría que te envíe la información detallada?`;
+  try {
+    const responseText = await flowController.handleMessage(msg);
+
+    const twiml = `
+      <Response>
+        <Message>${responseText}</Message>
+      </Response>
+    `;
+
+    res.type('text/xml');
+    res.send(twiml);
+  } catch (error) {
+    console.error('❌ Error handling message:', error);
+
+    const fallback = `
+      <Response>
+        <Message>Lo siento, algo salió mal. Intenta de nuevo más tarde.</Message>
+      </Response>
+    `;
+    res.type('text/xml');
+    res.send(fallback);
   }
-
-  // 📤 Respuesta para Twilio (XML)
-  const twiml = `
-    <Response>
-      <Message>${respuesta}</Message>
-    </Response>
-  `;
-
-  res.type('text/xml');
-  res.send(twiml);
 });
 
 app.listen(PORT, () => {
