@@ -1,12 +1,12 @@
 const franc = require('franc-min');
 
-function detectLanguage(message) {
-  const langCode = franc(message);
+function detectLanguage(text) {
+  const langCode = franc(text);
 
   if (langCode === 'spa') return 'es';
   if (langCode === 'eng') return 'en';
 
-  // Si no detecta correctamente, usamos espanol por defecto
+  // Si no se puede detectar bien, asumimos español por defecto
   return 'es';
 }
 
