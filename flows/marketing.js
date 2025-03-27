@@ -1,15 +1,9 @@
-let state = {};
+const { includesAny, normalizeText } = require('../utils/messageUtils');
 
-function normalizeText(text) {
-    return text
-      .toLowerCase()
-      .normalize('NFD') // Descompone letras acentuadas
-      .replace(/[\u0300-\u036f]/g, ''); // Elimina tildes
-  }  
+let state = {};
 
 const marketingFlow = (lang, from, msg) => {
   const lowerMsg = normalizeText(msg);
-  const cleanMsg = lowerMsg.replace(/[.,!?¿¡]/g, '').trim(); // limpiamos puntuación
   state[from] = state[from] || { step: 0 };
 
   const t = {
@@ -40,38 +34,23 @@ const marketingFlow = (lang, from, msg) => {
       state[from].step = 1;
       break;
 
-      case 1:
-        const affirmatives = ["yes", "sí", "si", "ok", "vale", "de acuerdo", "estoy interesada", "me interesa"];
-        const negatives = ["no"];
-      
-        if (affirmatives.some(word => lowerMsg.includes(word))) {
-          response.push(t[lang].askToContinue);
-          state[from].step = 2;
-        } else if (negatives.some(word => lowerMsg.includes(word))) {
-          response.push(t[lang].askToContinue);
-          state[from].step = 2;
-        } else {
-          response.push(t[lang].priceMention);
-        }
-        break;
-      
+    case 1:
+      if (includesAny(lowerMsg, ["yes", "si", "sí", "ok", "vale", "de acuerdo", "me interesa", "estoy interesada"])) {
+        response.push(t[lang].askToContinue);
+        state[from].step = 2;
+      } else if (includesAny(lowerMsg, ["no", "no gracias"])) {
+        response.push(t[lang].askToContinue);
+        state[from].step = 2;
+      } else {
+        response.push(t[lang].priceMention);
+      }
+      break;
 
     case 2:
-      if (
-        cleanMsg.includes("info") ||
-        cleanMsg.includes("detalles") ||
-        cleanMsg.includes("más") ||
-        cleanMsg.includes("service") ||
-        cleanMsg.includes("details")
-      ) {
+      if (includesAny(lowerMsg, ["info", "detalles", "más", "mas", "service", "details"])) {
         response.push(t[lang].serviceDetails);
         response.push(t[lang].askToContinue);
-      } else if (
-        cleanMsg.includes("yes") ||
-        cleanMsg.includes("agendar") ||
-        cleanMsg.includes("meeting") ||
-        cleanMsg.includes("cita")
-      ) {
+      } else if (includesAny(lowerMsg, ["agendar", "meeting", "cita", "yes", "quiero", "agendemos"])) {
         response.push(t[lang].meetingPrompt);
         response.push("👉 [Aquí iría el enlace al calendario o webhook]");
         state[from].step = 3;
