@@ -1,26 +1,23 @@
-const marketing = require('../flows/marketing');
-const design = require('../flows/design');
-const software = require('../flows/software');
 const { detectLanguage } = require('../utils/languageDetector');
-const messages = {
-  es: require('../locales/es.json'),
-  en: require('../locales/en.json'),
-};
+const marketingFlow = require('../flows/marketing');
+const designFlow = require('../flows/design');
+const softwareFlow = require('../flows/software');
 
-function handleMessage(msg) {
-  const lang = detectLanguage(msg); // "es" o "en"
+function handleFlow(msg) {
+  const lang = detectLanguage(msg); // esto debe ir primero
 
   if (msg.toLowerCase().includes('mercadeo') || msg.toLowerCase().includes('marketing')) {
-    return marketing(msg, messages[lang]);
-  }
-  if (msg.toLowerCase().includes('diseño') || msg.toLowerCase().includes('design')) {
-    return design(msg, messages[lang]);
-  }
-  if (msg.toLowerCase().includes('software')) {
-    return software(msg, messages[lang]);
+    return marketingFlow(lang);
+  } else if (msg.toLowerCase().includes('diseño') || msg.toLowerCase().includes('design')) {
+    return designFlow(lang);
+  } else if (msg.toLowerCase().includes('software') || msg.toLowerCase().includes('development')) {
+    return softwareFlow(lang);
   }
 
-  return messages[lang].default;
+  // Respuesta genérica si no detecta palabras clave
+  return lang === 'en'
+    ? "I'm here to help! Could you tell me more about what you're looking for?"
+    : '¡Estoy aquí para ayudarte! ¿Podés contarme un poco más sobre lo que estás buscando?';
 }
 
-module.exports = { handleMessage };
+module.exports = { handleFlow };
