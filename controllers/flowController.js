@@ -4,8 +4,8 @@ const designFlow = require('../flows/design');
 const softwareFlow = require('../flows/software');
 const routes = require('../utils/routes');
 
-function handleMessage(msg) {
-  const lang = detectLanguage(msg);
+async function handleMessage(msg) {
+  const lang = await detectLanguage(msg);
   const lowerMsg = msg.toLowerCase();
 
   for (const route of routes) {
