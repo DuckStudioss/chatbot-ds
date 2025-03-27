@@ -2,8 +2,8 @@ const { detectLanguage } = require('../utils/languageDetector');
 const { getRoute } = require('../utils/routes');
 
 async function handleMessage(msgBody, msgFrom) {
-  const lang = await detectLanguage(msg);
-  const route = getRoute(msg);
+  const lang = await detectLanguage(msgBody);
+  const route = getRoute(msgBody);
 
   if (route && typeof route.flow === 'function') {
     return route.flow(lang, msgFrom, msgBody);
