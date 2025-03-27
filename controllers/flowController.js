@@ -3,7 +3,7 @@ const marketingFlow = require('../flows/marketing');
 const designFlow = require('../flows/design');
 const softwareFlow = require('../flows/software');
 
-function handleFlow(msg) {
+function handleMessage(msg) {
   const lang = detectLanguage(msg); // esto debe ir primero
 
   if (msg.toLowerCase().includes('mercadeo') || msg.toLowerCase().includes('marketing')) {
