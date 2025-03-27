@@ -2,6 +2,7 @@ let state = {};
 
 const marketingFlow = (lang, from, msg) => {
   const lowerMsg = msg.toLowerCase();
+  const cleanMsg = lowerMsg.replace(/[.,!?¿¡]/g, '').trim(); // limpiamos puntuación
   state[from] = state[from] || { step: 0 };
 
   const t = {
@@ -33,10 +34,17 @@ const marketingFlow = (lang, from, msg) => {
       break;
 
     case 1:
-      if (lowerMsg.includes("yes") || lowerMsg.includes("sí") || lowerMsg.includes("ok") || lowerMsg.includes("vale") || lowerMsg.includes("de acuerdo")) {
+      if (
+        cleanMsg.includes("yes") ||
+        cleanMsg.includes("si") || // sin tilde
+        cleanMsg.includes("sí") ||
+        cleanMsg.includes("ok") ||
+        cleanMsg.includes("vale") ||
+        cleanMsg.includes("de acuerdo")
+      ) {
         response.push(t[lang].askToContinue);
         state[from].step = 2;
-      } else if (lowerMsg.includes("no")) {
+      } else if (cleanMsg.includes("no")) {
         response.push(t[lang].askToContinue);
         state[from].step = 2;
       } else {
@@ -45,10 +53,21 @@ const marketingFlow = (lang, from, msg) => {
       break;
 
     case 2:
-      if (lowerMsg.includes("info") || lowerMsg.includes("detalles") || lowerMsg.includes("más") || lowerMsg.includes("service") || lowerMsg.includes("details")) {
+      if (
+        cleanMsg.includes("info") ||
+        cleanMsg.includes("detalles") ||
+        cleanMsg.includes("más") ||
+        cleanMsg.includes("service") ||
+        cleanMsg.includes("details")
+      ) {
         response.push(t[lang].serviceDetails);
         response.push(t[lang].askToContinue);
-      } else if (lowerMsg.includes("yes") || lowerMsg.includes("agendar") || lowerMsg.includes("meeting") || lowerMsg.includes("cita")) {
+      } else if (
+        cleanMsg.includes("yes") ||
+        cleanMsg.includes("agendar") ||
+        cleanMsg.includes("meeting") ||
+        cleanMsg.includes("cita")
+      ) {
         response.push(t[lang].meetingPrompt);
         response.push("👉 [Aquí iría el enlace al calendario o webhook]");
         state[from].step = 3;

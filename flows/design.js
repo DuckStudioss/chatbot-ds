@@ -6,20 +6,20 @@ const designFlow = (lang, from, msg) => {
 
   const t = {
     en: {
-      greeting: "Hi there! 🎨 Tell me more about the design work you need and I’ll be happy to help.",
-      priceMention: "Just so you know, our design services start at $300. Does that fit your budget?",
-      askToContinue: "Would you like more info or to book a meeting with our team?",
-      serviceDetails: "We offer branding, social media content, web design, and more. All tailored to your business!",
-      meetingPrompt: "Awesome! Here's a link to schedule a meeting with our design team:",
-      goodbye: "Great, let’s create something amazing! 🐥",
+      greeting: "Hi there! 😊 Let’s talk about your design needs, I’d love to help you.",
+      priceMention: "Our design services start at $100. Would that fit your budget?",
+      askToContinue: "Would you like more information or to book a meeting?",
+      serviceDetails: "We do logos, branding, social media design, printed materials, product packaging, and much more.",
+      meetingPrompt: "Awesome! Here's the link to book a meeting so we can better understand your style and needs:",
+      goodbye: "Perfect, we’ll stay in touch! 🐥",
     },
     es: {
-      greeting: "¡Hola! 🎨 Cuéntame qué tipo de diseño necesitas y con gusto te ayudo.",
-      priceMention: "Para que lo tengas en cuenta, nuestros servicios de diseño inician desde $300. ¿Ese presupuesto está bien para ti?",
-      askToContinue: "¿Te gustaría recibir más información o agendar una reunión con nuestro equipo?",
-      serviceDetails: "Ofrecemos branding, contenido para redes, diseño web y más. Todo adaptado a tu negocio.",
-      meetingPrompt: "¡Perfecto! Aquí tienes un enlace para agendar una reunión con nuestro equipo de diseño:",
-      goodbye: "¡Genial, vamos a crear algo increíble! 🐥",
+      greeting: "¡Hola! 😊 Cuéntame sobre tus necesidades de diseño, con gusto te ayudamos.",
+      priceMention: "Nuestros servicios de diseño comienzan desde $100. ¿Ese presupuesto se ajusta a lo que buscás?",
+      askToContinue: "¿Querés más información o preferís agendar una reunión?",
+      serviceDetails: "Diseñamos logos, identidad visual, redes sociales, material impreso, empaques de productos y mucho más.",
+      meetingPrompt: "¡Genial! Aquí tienes el link para agendar una reunión y entender tu estilo y necesidades:",
+      goodbye: "Perfecto, seguimos en contacto 🐥",
     },
   };
 
