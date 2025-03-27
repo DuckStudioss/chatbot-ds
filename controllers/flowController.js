@@ -3,6 +3,13 @@ const marketingFlow = require('../flows/marketing');
 const designFlow = require('../flows/design');
 const softwareFlow = require('../flows/software');
 const routes = require('../utils/routes');
+const { getRoute } = require('../routes');
+
+const route = getRoute(msg);
+
+if (route && typeof route.flow === 'function') {
+    return route.flow(lang);
+  }
 
 async function handleMessage(msg) {
   const lang = await detectLanguage(msg);

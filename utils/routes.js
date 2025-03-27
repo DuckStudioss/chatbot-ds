@@ -19,3 +19,18 @@ module.exports = [
     flow: softwareFlow,
   },
 ];
+
+function getRoute(msg = '') {
+  const message = msg.toLowerCase();
+
+  for (const route of module.exports) {
+    if (route.keywords.some(keyword => message.includes(keyword))) {
+      return route;
+    }
+  }
+
+  return null; // Si no se detecta ninguna palabra clave
+}
+
+module.exports.getRoute = getRoute;
+
