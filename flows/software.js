@@ -1,7 +1,14 @@
 let state = {};
 
+function normalizeText(text) {
+    return text
+      .toLowerCase()
+      .normalize('NFD') // Descompone letras acentuadas
+      .replace(/[\u0300-\u036f]/g, ''); // Elimina tildes
+  }  
+
 const softwareFlow = (lang, from, msg) => {
-  const lowerMsg = msg.toLowerCase();
+    const lowerMsg = normalizeText(msg);
   state[from] = state[from] || { step: 0 };
 
   const t = {
