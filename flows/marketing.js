@@ -1,8 +1,6 @@
-module.exports = function marketingFlow(msg) {
-    if (msg.toLowerCase().includes("precio")) {
-      return "Nuestro servicio de mercadeo inicia en $3000 mensuales. ¿Deseas agendar una reunión para conocer más?";
-    }
-  
-    return "¡Hola! 🙌 Soy Antonio. Cuéntame, ¿qué te interesa saber sobre nuestro servicio de mercadeo?";
+function marketingFlow(lang = 'es') {
+    return lang === 'en'
+      ? 'Sure! 💡 I’ll tell you how our 360 marketing service works and what it includes.'
+      : '¡Claro! 💡 Te cuento cómo funciona nuestro servicio de mercadeo 360 y qué incluye.';
   }
   

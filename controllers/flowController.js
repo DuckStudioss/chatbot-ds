@@ -2,16 +2,18 @@ const { detectLanguage } = require('../utils/languageDetector');
 const marketingFlow = require('../flows/marketing');
 const designFlow = require('../flows/design');
 const softwareFlow = require('../flows/software');
+const routes = require('../utils/routes');
 
 function handleMessage(msg) {
-  const lang = detectLanguage(msg); // esto debe ir primero
+  const lang = detectLanguage(msg);
+  const lowerMsg = msg.toLowerCase();
 
-  if (msg.toLowerCase().includes('mercadeo') || msg.toLowerCase().includes('marketing')) {
-    return marketingFlow(lang);
-  } else if (msg.toLowerCase().includes('diseño') || msg.toLowerCase().includes('design')) {
-    return designFlow(lang);
-  } else if (msg.toLowerCase().includes('software') || msg.toLowerCase().includes('development')) {
-    return softwareFlow(lang);
+  for (const route of routes) {
+    for (const keyword of route.keywords) {
+      if (lowerMsg.includes(keyword.toLowerCase())) {
+        return route.flow(lang);
+      }
+    }
   }
 
   // Respuesta genérica si no detecta palabras clave
