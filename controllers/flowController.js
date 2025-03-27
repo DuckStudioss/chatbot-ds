@@ -1,26 +1,12 @@
 const { detectLanguage } = require('../utils/languageDetector');
-const marketingFlow = require('../flows/marketing');
-const designFlow = require('../flows/design');
-const softwareFlow = require('../flows/software');
-const routes = require('../utils/routes');
 const { getRoute } = require('../utils/routes');
-
-const route = getRoute(msg);
-
-if (route && typeof route.flow === 'function') {
-    return route.flow(lang);
-  }
 
 async function handleMessage(msg) {
   const lang = await detectLanguage(msg);
-  const lowerMsg = msg.toLowerCase();
+  const route = getRoute(msg);
 
-  for (const route of routes) {
-    for (const keyword of route.keywords) {
-      if (lowerMsg.includes(keyword.toLowerCase())) {
-        return route.flow(lang);
-      }
-    }
+  if (route && typeof route.flow === 'function') {
+    return route.flow(lang);
   }
 
   // Respuesta genérica si no detecta palabras clave
