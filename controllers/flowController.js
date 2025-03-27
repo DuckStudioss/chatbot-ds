@@ -3,7 +3,7 @@ const marketingFlow = require('../flows/marketing');
 const designFlow = require('../flows/design');
 const softwareFlow = require('../flows/software');
 const routes = require('../utils/routes');
-const { getRoute } = require('../routes');
+const { getRoute } = require('../utils/routes');
 
 const route = getRoute(msg);
 
