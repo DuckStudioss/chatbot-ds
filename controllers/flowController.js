@@ -6,7 +6,7 @@ async function handleMessage(msg) {
   const route = getRoute(msg);
 
   if (route && typeof route.flow === 'function') {
-    return route.flow(lang);
+    return route.flow(lang, msgFrom, msgBody);
   }
 
   // Respuesta genérica si no detecta palabras clave
