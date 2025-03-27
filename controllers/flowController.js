@@ -20,4 +20,4 @@ function handleMessage(msg) {
     : '¡Estoy aquí para ayudarte! ¿Podés contarme un poco más sobre lo que estás buscando?';
 }
 
-module.exports = { handleFlow };
+module.exports = { handleMessage };
