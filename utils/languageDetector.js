@@ -1,10 +1,11 @@
-const { franc } = require('franc-min');
-
 const detectLanguage = async (text) => {
-  const langCode = franc(text); // ✅ llamada directa
-  if (langCode === 'spa') return 'es';
-  if (langCode === 'eng') return 'en';
-  return 'es';
-};
-
-module.exports = { detectLanguage };
+    const { franc } = await import('franc-min'); // ✅ dynamic import
+    const langCode = franc(text);
+  
+    if (langCode === 'spa') return 'es';
+    if (langCode === 'eng') return 'en';
+    return 'es';
+  };
+  
+  module.exports = { detectLanguage };
+  
