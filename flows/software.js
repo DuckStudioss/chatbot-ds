@@ -32,17 +32,21 @@ const softwareFlow = (lang, from, msg) => {
       state[from].step = 1;
       break;
 
-    case 1:
-      if (lowerMsg.includes("yes") || lowerMsg.includes("sí") || lowerMsg.includes("ok") || lowerMsg.includes("vale") || lowerMsg.includes("de acuerdo")) {
-        response.push(t[lang].askToContinue);
-        state[from].step = 2;
-      } else if (lowerMsg.includes("no")) {
-        response.push(t[lang].askToContinue);
-        state[from].step = 2;
-      } else {
-        response.push(t[lang].priceMention);
-      }
-      break;
+      case 1:
+        const affirmatives = ["yes", "sí", "si", "ok", "vale", "de acuerdo", "estoy interesada", "me interesa"];
+        const negatives = ["no"];
+      
+        if (affirmatives.some(word => lowerMsg.includes(word))) {
+          response.push(t[lang].askToContinue);
+          state[from].step = 2;
+        } else if (negatives.some(word => lowerMsg.includes(word))) {
+          response.push(t[lang].askToContinue);
+          state[from].step = 2;
+        } else {
+          response.push(t[lang].priceMention);
+        }
+        break;
+      
 
     case 2:
       if (lowerMsg.includes("info") || lowerMsg.includes("detalles") || lowerMsg.includes("más") || lowerMsg.includes("service") || lowerMsg.includes("details")) {

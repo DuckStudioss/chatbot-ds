@@ -33,24 +33,21 @@ const marketingFlow = (lang, from, msg) => {
       state[from].step = 1;
       break;
 
-    case 1:
-      if (
-        cleanMsg.includes("yes") ||
-        cleanMsg.includes("si") || // sin tilde
-        cleanMsg.includes("sí") ||
-        cleanMsg.includes("ok") ||
-        cleanMsg.includes("vale") ||
-        cleanMsg.includes("de acuerdo")
-      ) {
-        response.push(t[lang].askToContinue);
-        state[from].step = 2;
-      } else if (cleanMsg.includes("no")) {
-        response.push(t[lang].askToContinue);
-        state[from].step = 2;
-      } else {
-        response.push(t[lang].priceMention);
-      }
-      break;
+      case 1:
+        const affirmatives = ["yes", "sí", "si", "ok", "vale", "de acuerdo", "estoy interesada", "me interesa"];
+        const negatives = ["no"];
+      
+        if (affirmatives.some(word => lowerMsg.includes(word))) {
+          response.push(t[lang].askToContinue);
+          state[from].step = 2;
+        } else if (negatives.some(word => lowerMsg.includes(word))) {
+          response.push(t[lang].askToContinue);
+          state[from].step = 2;
+        } else {
+          response.push(t[lang].priceMention);
+        }
+        break;
+      
 
     case 2:
       if (
