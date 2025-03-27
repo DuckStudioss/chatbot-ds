@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
 
-const flowController = require('./flows/flowController');
+const flowController = require('./controllers/flowController');
 
 app.post('/webhook', async (req, res) => {
   const from = req.body.From || '';
